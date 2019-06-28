@@ -1,8 +1,8 @@
 package lexing
 
 sealed trait Token {
-  val Type: String
-  val Literal: String
+  def Type: String
+  def Literal: String
 
   override def toString: String = s"""{$Type : "$Literal"}"""
 }
@@ -10,162 +10,162 @@ sealed trait Token {
 object Token {
 
   case class ILLEGAL(illegalLiteral: String) extends Token {
-    val Type = "ILLEGAL"
-    val Literal: String = illegalLiteral
+    def Type = "ILLEGAL"
+    def Literal: String = illegalLiteral
   }
 
   case object EOF extends Token {
-    val Type = "EOF"
-    val Literal = "EOF"
+    def Type = "EOF"
+    def Literal = "EOF"
   }
 
   // identifiers & int literals
   case class IDENT(identLiteral: String) extends Token {
-    val Type = "IDENT"
-    val Literal: String = identLiteral
+    def Type = "IDENT"
+    def Literal: String = identLiteral
   }
 
   case class INT(intLiteral: String) extends Token {
-    val Type = "INT"
-    val Literal: String = intLiteral
+    def Type = "INT"
+    def Literal: String = intLiteral
   }
 
   // operators
   case object ASSIGN extends Token {
-    val Type = "ASSIGN"
-    val Literal = "="
+    def Type = "ASSIGN"
+    def Literal = "="
   }
 
   case object PLUS extends Token {
-    val Type = "PLUS"
-    val Literal = "+"
+    def Type = "PLUS"
+    def Literal = "+"
   }
 
   case object MINUS extends Token {
-    val Type = "MINUS"
-    val Literal = "-"
+    def Type = "MINUS"
+    def Literal = "-"
   }
 
   case object BANG extends Token {
-    val Type = "BANG"
-    val Literal = "!"
+    def Type = "BANG"
+    def Literal = "!"
   }
 
   case object ASTERISK extends Token {
-    val Type = "ASTERISK"
-    val Literal = "*"
+    def Type = "ASTERISK"
+    def Literal = "*"
   }
 
   case object SLASH extends Token {
-    val Type = "SLASH"
-    val Literal = "/"
+    def Type = "SLASH"
+    def Literal = "/"
   }
 
   case object LT extends Token {
-    val Type = "LT"
-    val Literal = "<"
+    def Type = "LT"
+    def Literal = "<"
   }
 
   case object LTE extends Token {
-    val Type = "LTE"
-    val Literal = "<="
+    def Type = "LTE"
+    def Literal = "<="
   }
 
   case object GT extends Token {
-    val Type = "GT"
-    val Literal = ">"
+    def Type = "GT"
+    def Literal = ">"
   }
 
   case object GTE extends Token {
-    val Type = "GTE"
-    val Literal = ">="
+    def Type = "GTE"
+    def Literal = ">="
   }
 
   case object EQ extends Token {
-    val Type = "EQ"
-    val Literal = "=="
+    def Type = "EQ"
+    def Literal = "=="
   }
 
   case object NOT_EQ extends Token {
-    val Type = "NOT_EQ"
-    val Literal = "!="
+    def Type = "NOT_EQ"
+    def Literal = "!="
   }
 
   // delimiters
   case object COMMA extends Token {
-    val Type = "COMMA"
-    val Literal = ","
+    def Type = "COMMA"
+    def Literal = ","
   }
 
   case object SEMICOLON extends Token {
-    val Type = "SEMICOLON"
-    val Literal = ";"
+    def Type = "SEMICOLON"
+    def Literal = ";"
   }
 
   case object LPAREN extends Token {
-    val Type = "LPAREN"
-    val Literal = "("
+    def Type = "LPAREN"
+    def Literal = "("
   }
 
   case object RPAREN extends Token {
-    val Type = "RPAREN"
-    val Literal = ")"
+    def Type = "RPAREN"
+    def Literal = ")"
   }
 
   case object LBRACE extends Token {
-    val Type = "LBRACE"
-    val Literal = "{"
+    def Type = "LBRACE"
+    def Literal = "{"
   }
 
   case object RBRACE extends Token {
-    val Type = "RBRACE"
-    val Literal = "}"
+    def Type = "RBRACE"
+    def Literal = "}"
   }
 
   case object LBRACK extends Token {
-    val Type = "LBRACK"
-    val Literal = "["
+    def Type = "LBRACK"
+    def Literal = "["
   }
 
   case object RBRACK extends Token {
-    val Type = "RBRACK"
-    val Literal = "]"
+    def Type = "RBRACK"
+    def Literal = "]"
   }
 
   // keywords
   case object FUNCTION extends Token {
-    val Type = "FUNCTION"
-    val Literal = "FUNCTION"
+    def Type = "FUNCTION"
+    def Literal = "FUNCTION"
   }
 
   case object LET extends Token {
-    val Type = "LET"
-    val Literal = "LET"
+    def Type = "LET"
+    def Literal = "LET"
   }
 
   case object TRUE extends Token {
-    val Type = "TRUE"
-    val Literal = "TRUE"
+    def Type = "TRUE"
+    def Literal = "TRUE"
   }
 
   case object FALSE extends Token {
-    val Type = "FALSE"
-    val Literal = "FALSE"
+    def Type = "FALSE"
+    def Literal = "FALSE"
   }
 
   case object IF extends Token {
-    val Type = "IF"
-    val Literal = "IF"
+    def Type = "IF"
+    def Literal = "IF"
   }
 
   case object ELSE extends Token {
-    val Type = "ELSE"
-    val Literal = "ELSE"
+    def Type = "ELSE"
+    def Literal = "ELSE"
   }
 
   case object RETURN extends Token {
-    val Type = "RETURN"
-    val Literal = "RETURN"
+    def Type = "RETURN"
+    def Literal = "RETURN"
   }
 
 }
