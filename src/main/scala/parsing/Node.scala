@@ -16,7 +16,9 @@ object Node {
 
   case class StringLiteral(value: String) extends Expression
 
-  case class Operation(left: Expression, operator: Token, right: Expression) extends Expression
+  case class PrefixExpression(operator: String, right: Expression) extends Expression
+
+  case class Operation(left: Expression, operator: String, right: Expression) extends Expression
 
   case class ExpressionStatement(value: Expression) extends Statement
 
