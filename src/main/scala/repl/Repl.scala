@@ -10,8 +10,8 @@ object Repl {
       val i = readLine("> ")
       val lexed = Lexer.tokenize(i.toCharArray.toList)
       println(lexed)
-      val parsed = Parser.parse(lexed)
-      println(parsed)
+//      val parsed = Parser.parse(lexed)
+//      println(parsed)
     }
   }
 }

@@ -6,35 +6,56 @@ import parsing.Node._
 
 object Parser {
 
-  private def parseExpressions(tokens: List[Token]): (Expression, List[Token]) = tokens match {
-    case (curr: INT) :: rest  => (Identifier(curr.Literal), rest)
-  }
+  def prefixParse(): Expression = ???
+
+  def infixParse(expression: Expression): Expression = ???
 
   def parseIntegerLiteral(integer: INT): Expression = IntegerLiteral(Integer.parseInt(integer.Literal))
 
-  def parseOperationExpression(integer: INT, operator: Token, rest: List[Token]): (Node, List[Token]) = {
-    val (right, restAfterParseExpression) = parseExpressions(rest)
+  def parseOperationExpression(integer: INT, operator: Token, rest: List[Token]): (Expression, List[Token]) = {
+    val (right, restAfterParseExpression) = parseExpression(rest)
     (Operation(parseIntegerLiteral(integer), operator, right), restAfterParseExpression)
   }
 
-  def parseGroupedExpression(): (Node, List[Token]) = ???
-
-  def parseLetStatement(tokens: List[Token]): (Node, List[Token]) = tokens match {
-    case (name: IDENT) :: ASSIGN :: (curr: INT) :: SEMICOLON :: rest => (LetStatement(Identifier(name.Literal), parseIntegerLiteral(curr)), rest)
+  private def parseExpression(tokens: List[Token]): (Expression, List[Token]) = tokens match {
+    case (curr: INT) :: SEMICOLON :: rest  => (parseIntegerLiteral(curr), rest)
     case (curr: INT) :: (operator @ (PLUS|MINUS)) :: rest => parseOperationExpression(curr, operator, rest)
+  }
+
+  def parseGroupedExpression() = ???
+
+  def parseExpressionStatement(tokens: List[Token]): (ExpressionStatement, List[Token]) = {
+    val (expression, rest) = parseExpression(tokens)
+    (ExpressionStatement(expression), rest)
+  }
+
+  def parseLetStatement(tokens: List[Token]): (LetStatement, List[Token]) = tokens match {
+    case (name: IDENT) :: ASSIGN :: rest =>
+      val (expression, restAfterParseExpression) = parseExpression(rest)
+      (LetStatement(Identifier(name.Literal), expression), restAfterParseExpression)
     case LPAREN :: rest => parseGroupedExpression()
   }
 
-  def parseStatement(tokens: List[Token]): (Node, List[Token]) = tokens match {
+  def parseReturnStatement(tokens: List[Token]): (ReturnStatement, List[Token]) = {
+    val (expression, rest) = parseExpression(tokens)
+    (ReturnStatement(expression), rest)
+  }
+
+  def parseStatement(tokens: List[Token]): (Statement, List[Token]) = tokens match {
     case LET :: rest => parseLetStatement(rest)
+
+    case RETURN :: rest => parseReturnStatement(rest)
+
+    case _ => parseExpressionStatement(_)
+
     case EOF :: _ => (Eof, List[Token]())
   }
-  def parse(tokens: List[Token]): List[Node] = {
-    def getNodes(nodes: List[Node], tokens: List[Token]): List[Node] = parseStatement(tokens) match {
-      case (Eof, _) => (Eof +: nodes).reverse
-      case (node, rest) => getNodes(node +: nodes, rest)
+  def parse(tokens: List[Token]): List[Statement] = {
+    def getNodes(statements: List[Statement], tokens: List[Token]): List[Statement] = parseStatement(tokens) match {
+      case (Eof, _) => statements.reverse
+      case (statement, rest) => getNodes(statement +: statements, rest)
     }
 
-    getNodes(List[Node](), tokens)
+    getNodes(List[Statement](), tokens)
   }
 }

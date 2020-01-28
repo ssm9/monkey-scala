@@ -14,13 +14,19 @@ object Node {
 
   case class IntegerLiteral(value: Int) extends Expression
 
+  case class StringLiteral(value: String) extends Expression
+
   case class Operation(left: Expression, operator: Token, right: Expression) extends Expression
+
+  case class ExpressionStatement(value: Expression) extends Statement
 
   case class LetStatement(name: Identifier, value: Expression) extends Statement
 
+  case class ReturnStatement(value: Expression) extends Statement
+
   case class Program(statements: List[Statement]) extends Node
 
-  case object Eof extends Node
+  case object Eof extends Statement
 }
 
 /**
